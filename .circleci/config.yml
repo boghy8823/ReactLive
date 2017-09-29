@@ -9,7 +9,7 @@ jobs:
       node:
         version: 6.0
       environment:
-        PATH: "${PATH}:${HOME}/${ReactLive}/node_modules/.bin"
+        PATH: "${PATH}:${HOME}/ReactLive/node_modules/.bin"
     dependencies:
       override:
         - yarn
