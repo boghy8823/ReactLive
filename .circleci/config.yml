@@ -5,13 +5,19 @@ jobs:
       node:
         version: 6.11.0
       environment:
-        PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+        PATH: "${PATH}:${HOME}/.yarn/bin"
+        YARN_VERSION: 1.1.0
     dependencies:
       pre:
-        - curl -o- -L https://yarnpkg.com/install.sh | bash
+        - |
+          if [[ ! -e ~/.yarn/bin/yarn || $(yarn --version) != "${YARN_VERSION}" ]]; then
+            curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
+          fi
       override:
-        - yarn
+        -  yarn install --pure-lockfile --no-progress
     cache_directories:
+        - ~/.yarn
+        - ~/.yarn-cache
         - ~/.cache/yarn
     test:
       override:
