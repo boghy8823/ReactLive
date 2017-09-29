@@ -5,6 +5,11 @@
 version: 2
 jobs:
   build:
+    machine:
+      timezone:
+        America/Los_Angeles
+      node:
+        version: 6.0
 
     working_directory: ~/repo
 
