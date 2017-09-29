@@ -1,18 +1,22 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
 version: 2
 jobs:
   build:
     machine:
       timezone:
         America/Los_Angeles
+      pre:
+        - mkdir ~/.yarn-cache
       node:
-        version: 6.0
+        version: stable
+      dependencies:
+        pre:
+          - curl -o- -L https://yarnpkg.com/install.sh | bash
+        cache_directories:
+          - ~/.yarn-cache
+        override:
+          - yarn install
 
-    working_directory: ~/repo
-
+        working_directory: ~/repo
     steps:
       - checkout
 
