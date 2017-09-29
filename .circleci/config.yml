@@ -1,3 +1,7 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
 version: 2
 jobs:
   build:
@@ -9,20 +13,6 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
-      environment:
-        PATH: "${PATH}:${HOME}/.yarn/bin"
-    dependencies:
-      pre:
-        - curl -o- -L https://yarnpkg.com/install.sh | bash
-      override:
-        -  yarn install
-    cache_directories:
-        - ~/.yarn
-        - ~/.yarn-cache
-        - ~/.cache/yarn
-    test:
-      override:
-        - yarn test
 
     working_directory: ~/repo
 
@@ -42,3 +32,6 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+        
+      # run tests!
+      - run: yarn test
