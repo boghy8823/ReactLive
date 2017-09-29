@@ -1,20 +1,21 @@
 version: 2
 jobs:
   build:
-    machine:
-      node:
-        version: 6.11.0
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:7.10
+      
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
       environment:
         PATH: "${PATH}:${HOME}/.yarn/bin"
-        YARN_VERSION: 1.1.0
     dependencies:
       pre:
-        - |
-          if [[ ! -e ~/.yarn/bin/yarn || $(yarn --version) != "${YARN_VERSION}" ]]; then
-            curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
-          fi
+        - curl -o- -L https://yarnpkg.com/install.sh | bash
       override:
-        -  yarn install --pure-lockfile --no-progress
+        -  yarn install
     cache_directories:
         - ~/.yarn
         - ~/.yarn-cache
