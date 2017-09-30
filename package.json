@@ -6,7 +6,8 @@
   "author": "Bogdan Dumitriu <bogdan.dumitriu@igamingcloud.com>",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "build": "webpack --progress -p"
   },
   "dependencies": {
     "html-webpack-plugin": "^2.30.1",
