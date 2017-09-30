@@ -26,7 +26,12 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: yarn install
+      - run: 
+          name: Install dependencies
+          working_directory: /
+          command: |
+            yarn install
+            sudo apt-get -y -qq install awscli
 
       - save_cache:
           paths:
@@ -36,11 +41,6 @@ jobs:
       - deploy:
           name: Deploy to S3 if tests pass and branch is Master
           command: |
-            sudo apt-get -y -qq update
-            sudo apt-get -y -qq install python3.4-dev
-            curl -O https://bootstrap.pypa.io/get-pip.py
-            sudo python3.4 get-pip.py --user
-            pip install awscli --upgrade --user
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               aws s3 sync client s3://clearscoretest/app --delete
             else
